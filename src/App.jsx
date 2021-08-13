@@ -1,76 +1,51 @@
 import React, { Component } from "react";
 import "./style.css";
+import Save from "./save.png";
+import Cancel from "./cancel.png";
+import Table from "./table.jsx";
+
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      status: "",
-      data: [
-        { id: 1, name: "Jabbor", status: "Medium" },
-        { id: 2, name: "Mansur", status: "High" },
-        { id: 3, name: "Jumanazar", status: "Low" },
-        { id: 4, name: "Abdulvohid", status: "Vaha" },
-      ],
+      isLoggedIn: true,
+      isActive: "today",
     };
   }
 
   render() {
-    const onDelete = (id) => {
-      console.log("delete", id);
-      const newData = this.state.data.filter((value) => value.id !== id);
-      this.setState({ data: newData });
+    const onChange = () => {
+      this.setState({ isLoggedIn: !this.state.isLoggedIn });
     };
-    const onAdd = () => {
-      console.log(this.state.name, this.state.status);
-      const newData = [
-        ...this.state.data,
-        {
-          id: this.state.data.length + 1,
-          name: this.state.name,
-          status: this.state.status,
-        },
-      ];
-      this.setState({ data: newData });
+    const change = (title) => {
+      this.setState({ isActive: title });
     };
-    const onChangeName = (e) => {
-      this.setState({ name: e.target.value });
-    };
-    const onChangeSatatus = (e) => {
-      this.setState({ status: e.target.value });
-    };
+
     return (
       <div>
-        <input onChange={onChangeName} placeholder="name" type="text" />
-        <input onChange={onChangeSatatus} placeholder="status" type="text" />
-        <button onClick={onAdd}>add</button>
-        <table border="1" style={{ borderCollapse: "collapse" }}>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.data.map((value) => {
-              return (
-                <tr key={value.id}>
-                  <td>{value.id}</td>
-                  <td> {value.name} </td>
-                  <td> {value.status} </td>
-                  <td>
-                    <button onClick={() => onDelete(value.id)}>delete</button>
-                    <button onClick={() => onDelete(value.id)}>Add</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-
-        <hr />
+        <div className="wrapper">
+          <div
+            onClick={() => change("today")}
+            className={`title ${this.state.isActive === "today" && "active"} `}
+          >
+            Today
+          </div>
+          <div
+            onClick={() => change("week")}
+            className={`title ${this.state.isActive === "week" && "active"} `}
+          >
+            Week
+          </div>
+          <div
+            onClick={() => change("month")}
+            className={`title ${this.state.isActive === "month" && "active"} `}
+          >
+            Month
+          </div>
+        </div>
+        {this.state.isActive === "today" && <h1>Todays news</h1>}
+        {this.state.isActive === "week" && <h1>Weeks news</h1>}
+        {this.state.isActive === "month" && <Table />}
       </div>
     );
   }

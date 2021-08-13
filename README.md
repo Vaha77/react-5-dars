@@ -68,3 +68,58 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+<!--  -->
+<!--  -->
+
+import React, { Component } from "react";
+import "./style.css";
+export default class App extends Component {
+constructor(props) {
+super(props);
+this.state = {
+isLoggedIn: true,
+};
+}
+
+render() {
+const onChange = () => {
+this.setState({ isLoggedIn: !this.state.isLoggedIn });
+};
+
+    if (this.state.isLoggedIn)
+      return (
+        <div>
+          <div>
+            <h1>Welcome to Facebook</h1>
+            <button onClick={onChange}>Change</button>
+          </div>
+        </div>
+      );
+    else
+      return (
+        <div>
+          <h1> bye to Facebook</h1>
+          <button onClick={onChange}>Change</button>
+        </div>
+      );
+
+}
+}
+
+{/_ if elseni sodalashgan variyanti _/}
+{this.state.isLoggedIn ? (
+<h1>Welcome to Facebook</h1>
+) : (
+<h1>Bye to Facebook</h1>
+)}
+
+        {this.state.isLoggedIn ? (
+          <img src={save} alt="" />
+        ) : (
+          <img src={cancel} alt="" />
+        )}
+
+        <button onClick={onChange}>
+          {this.state.isLoggedIn ? "logOut" : "Login"}
+        </button>
