@@ -6,6 +6,8 @@ export default class App extends Component {
     this.state = {
       name: "",
       status: "",
+      editName: "",
+      editStatus: "",
       selected: null,
       data: [
         { id: 1, name: "Jabbor", status: "Medium" },
@@ -44,11 +46,25 @@ export default class App extends Component {
     //   const newData=this.state.data.sort((a, b)=>)
     // }
 
-    const onEdit = (id) => {
-      console.log(id, "edit");
+    const onEdit = (value) => {
+      this.setState({
+        selected: value.id,
+        editName: value.name,
+        editStatus: value.status,
+      });
+    };
+    const onSave = () => {
+      this.setState({ selected: null });
+    };
+    const onEditName = (e) => {
+      this.setState({ editName: e.target.value });
+    };
+    const onEditStatus = (e) => {
+      this.setState({ editStatus: e.target.value });
     };
     return (
       <div>
+        <h1>Selectod: {this.state.selected}</h1>
         <input onChange={onChangeName} placeholder="name" type="text" />
         <input onChange={onChangeSatatus} placeholder="status" type="text" />
         <button onClick={onAdd}>add</button>
@@ -67,11 +83,38 @@ export default class App extends Component {
               return (
                 <tr key={value.id}>
                   <td>{value.id}</td>
-                  <td> {value.name} </td>
-                  <td> {value.status} </td>
+                  <td>
+                    {this.state.selected === value.id ? (
+                      <input
+                        onChange={onEditName}
+                        type="text"
+                        value={this.state.editName}
+                      />
+                    ) : (
+                      value.name
+                    )}
+                  </td>
+                  <td>
+                    {" "}
+                    {this.state.selected === value.id ? (
+                      <input
+                        onChange={onEditStatus}
+                        type="text"
+                        value={this.state.editStatus}
+                      />
+                    ) : (
+                      value.status
+                    )}
+                  </td>
                   <td>
                     <button onClick={() => onDelete(value.id)}>delete</button>
-                    <button onClick={() => onEdit(value.id)}>Edit</button>
+                  </td>
+                  <td>
+                    {this.state.selected === value.id ? (
+                      <button onClick={onSave}>Save</button>
+                    ) : (
+                      <button onClick={() => onEdit(value)}>Edit</button>
+                    )}
                   </td>
                 </tr>
               );

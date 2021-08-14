@@ -41,3 +41,8 @@ body {
 button {
   background-color: rgba(201, 233, 195, 0.89);
 }
+
+input {
+  width: 110px;
+  border: 1px solid red;
+}

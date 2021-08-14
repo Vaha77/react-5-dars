@@ -45,6 +45,7 @@ export default class App extends Component {
         </div>
         {this.state.isActive === "today" && <h1>Todays news</h1>}
         {this.state.isActive === "week" && <h1>Weeks news</h1>}
+        {this.state.isActive === "month" && <h1>Malumot</h1>}
         {this.state.isActive === "month" && <Table />}
       </div>
     );
